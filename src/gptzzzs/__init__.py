@@ -71,6 +71,8 @@ class Gptzzzs:
             raise ValueError("Invalid adjective list")
 
         if common_words:
+            if synonyms is None:
+                raise ValueError("Synonym list not loaded")
             synonyms = {word: synonyms[word] for word in synonyms if word in self.common_words}
 
         return change_text(text, synonyms, adjectives, percent_synonyms, ignore_quotes, percent_adjectives)
@@ -114,6 +116,8 @@ class Gptzzzs:
             raise ValueError("Invalid adjective list")
 
         if common_words:
+            if synonyms is None:
+                raise ValueError("Synonym list not loaded")
             synonyms = {word: synonyms[word] for word in synonyms if word in self.common_words}
 
         return change_text_contextual(text, synonyms, adjectives, percent_synonyms, 

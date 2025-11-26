@@ -49,7 +49,11 @@ def download_common_words():
 def download_adjectives():
     response = urllib.request.urlopen(adjective_url)
     lines = response.read().decode('utf-8').split("\n")
-    adjectives = [re.search('\'(.*)\',', line).group(1) for line in lines[1:-2] if re.search('\'(.*)\',', line)]
+    adjectives = []
+    for line in lines[1:-2]:
+        match = re.search(r'\'(.*)\',', line)
+        if match:
+            adjectives.append(match.group(1))
     with open(os.path.join(data_dir, "adjectives.json"), "w") as f:
         json.dump(adjectives, f)
 

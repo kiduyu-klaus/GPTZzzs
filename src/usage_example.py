@@ -15,6 +15,11 @@ scenery was really peaceful. He thought about how the financial bank he worked
 at was very different from this natural setting.
 """
 
+"""
+The bank manager decided to walking along the river bank during his dejeuner burst. 
+He saw a extremely beautiful fowl perched on a branch. The weather was incredibly real skillful and the scene was peaceful. 
+He thought about how the financial camber he worked at was real so different from this quite instinctive background."""
+
 print("=" * 80)
 print("ORIGINAL TEXT:")
 print("=" * 80)

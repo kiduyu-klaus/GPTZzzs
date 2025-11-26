@@ -8,14 +8,31 @@ try:
     nltk.data.find('tokenizers/punkt')
 except LookupError:
     nltk.download('punkt')
+
+try:
+    nltk.data.find('tokenizers/punkt_tab')
+except LookupError:
+    nltk.download('punkt_tab')
+
 try:
     nltk.data.find('taggers/averaged_perceptron_tagger')
 except LookupError:
     nltk.download('averaged_perceptron_tagger')
+
+try:
+    nltk.data.find('taggers/averaged_perceptron_tagger_eng')
+except LookupError:
+    nltk.download('averaged_perceptron_tagger_eng')
+
 try:
     nltk.data.find('corpora/wordnet')
 except LookupError:
     nltk.download('wordnet')
+
+try:
+    nltk.data.find('corpora/omw-1.4')
+except LookupError:
+    nltk.download('omw-1.4')
 
 
 def get_wordnet_pos(treebank_tag):
