@@ -36,6 +36,8 @@ basic_result = gpt.basic_change_text(
     percent_adjectives=60
 )
 print(basic_result)
+gpts = gptzzzs.Gptzzzs()
+
 
 print("\n" + "=" * 80)
 print("CONTEXTUAL CHANGE (with POS tagging and context awareness):")
