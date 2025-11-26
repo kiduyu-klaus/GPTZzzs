@@ -65,8 +65,12 @@ def passive_to_active(sentence):
     
     _, be_index, participle_index, by_index, tokens, tags = result
     
+    # This should not happen due to the check on result[0], but it satisfies Pylance
+    if be_index is None or participle_index is None or tokens is None:
+        return sentence
+
     # If there's no "by" phrase, we can't easily convert to active
-    if by_index == -1:
+    if by_index is None or by_index == -1:
         return sentence
     
     try:
@@ -353,7 +357,7 @@ def combined_transformation(text, synonyms, adjectives,
     :return: Fully transformed text
     """
     # Import here to avoid circular dependency
-    from gptzzzs.context_aware_change import change_text_contextual
+    from gptzzzs.context_aware import change_text_contextual
     
     # First apply sentence structure variations
     text_varied = vary_sentence_structure(
