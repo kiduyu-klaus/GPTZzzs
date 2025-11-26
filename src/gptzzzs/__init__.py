@@ -3,6 +3,7 @@ import json
 import urllib.request
 
 from gptzzzs.normal_change import change_text
+from gptzzzs.context_aware import change_text_contextual
 
 
 class Gptzzzs:
@@ -74,6 +75,50 @@ class Gptzzzs:
 
         return change_text(text, synonyms, adjectives, percent_synonyms, ignore_quotes, percent_adjectives)
 
+    def contextual_change_text(self, text, synonym_list="finnlp", percent_synonyms=30, ignore_quotes=True,
+                              percent_adjectives=60, common_words=False, adjective_list="normal",
+                              use_pos_filtering=True):
+        """
+        Changes text using context-aware synonym replacement with POS tagging.
+        This method produces more natural results by considering word context.
+
+        :param text: the text to be changed
+        :param synonym_list: the list of synonyms to use (finnlp, zaibacu, custom)
+        :param percent_synonyms: the percentage of words to change (if possible) - default 30% for better quality
+        :param ignore_quotes: whether to ignore words in quotes
+        :param percent_adjectives: the percentage of adjectives to change emphasization on
+        :param common_words: whether to only use common words
+        :param adjective_list: the list of adjectives to use (normal, custom)
+        :param use_pos_filtering: whether to filter synonyms by part of speech
+        :return: the changed text
+        """
+
+        if synonym_list == "finnlp":
+            synonyms = self.finnlp_together
+        elif synonym_list == "zaibacu":
+            synonyms = self.zaibacu
+        elif synonym_list == "custom" and self.custom_synonyms is None:
+            raise ValueError("Custom synonyms not set")
+        elif synonym_list == "custom":
+            synonyms = self.custom_synonyms
+        else:
+            raise ValueError("Invalid synonym list")
+
+        if adjective_list == "normal":
+            adjectives = self.adjectives
+        elif adjective_list == "custom" and self.custom_adjectives is None:
+            raise ValueError("Custom adjectives not set")
+        elif adjective_list == "custom":
+            adjectives = self.custom_adjectives
+        else:
+            raise ValueError("Invalid adjective list")
+
+        if common_words:
+            synonyms = {word: synonyms[word] for word in synonyms if word in self.common_words}
+
+        return change_text_contextual(text, synonyms, adjectives, percent_synonyms, 
+                                     ignore_quotes, percent_adjectives, use_pos_filtering)
+
     def custom_synonyms_from_url(self, url):
         """
         Loads custom synonyms from a URL
@@ -96,7 +141,6 @@ class Gptzzzs:
         adjectives = json.loads(response.read().decode('utf-8'))
         self.custom_adjectives = adjectives
 
-
     def custom_synonyms_from_file(self, path):
         """
         Loads custom synonyms from a file
@@ -118,7 +162,6 @@ class Gptzzzs:
         with open(path, "r") as f:
             adjectives = json.load(f)
         self.custom_adjectives = adjectives
-
 
     def custom_synonyms_from_dict(self, synonyms):
         """

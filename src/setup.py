@@ -66,20 +66,23 @@ with open("../README.md", "r", encoding="utf-8") as fh:
 # Setup configuration
 setup(
     name='gptzzzs',
-    version='0.0.1',
+    version='0.1.0',  # Updated version for context-aware feature
     packages=find_packages(),
     author='Jackson Hickey',
     author_email='jackson@jacksonhickey.tech',
-    description='Gptzzzs is a tool that attempts large language model detection evasion by changing grammar.',
+    description='Gptzzzs is a tool that attempts large language model detection evasion by changing grammar with context awareness.',
     long_description=long_description,
     long_description_content_type="text/markdown",
     url='https://github.com/Declipsonator/GPTZzzs',
     classifiers=[
-        'Programming Language :: Python :: 3.1',
+        'Programming Language :: Python :: 3.7',
         'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
         'Operating System :: OS Independent',
     ],
-    python_requires='>=3.1',
+    python_requires='>=3.7',
+    install_requires=[
+        'nltk>=3.6',  # Required for POS tagging and WordNet
+    ],
     include_package_data=True,
     package_data={'gptzzzs': ['data/*.json']},
 )
